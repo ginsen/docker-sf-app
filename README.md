@@ -72,14 +72,14 @@ Replace **10.128.80.5** with your default network IP and set **XDEBUG_PORT** wit
 
 Make sure you have the some port that you have configured previously in "XDEBUG_PORT" environment variable:
 
-![alt text](https://github.com/ginsen/docker-services/raw/master/docker/doc/xdebug_port.png "Xdebug port")
+![alt text](https://raw.githubusercontent.com/ginsen/docker-sf-app/master/docker/doc/xdebug_port.png "Xdebug port")
 
 Next, we need to configure a server. This is how PHPStorm will map the file paths in your local system to the ones in
 your container.
 
 Go to File -> Settings -> Languages and Frameworks -> PHP -> Servers
 
-![alt text](https://github.com/ginsen/docker-services/raw/master/docker/doc/xdebug_server.png "Xdebug server")
+![alt text](https://raw.githubusercontent.com/ginsen/docker-sf-app/master/docker/doc/xdebug_server.png "Xdebug server")
 
 Give a name to your server. It should match the value you have defined in your "APP" environment variable and replace 
 "symfony-demo" with your "APP" name and replace **Port** 8888 with your "NGINX_PORT" environment variable.
