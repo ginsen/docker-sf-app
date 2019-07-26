@@ -10,13 +10,15 @@ ARG XDEBUG_PORT
 # Install APT basic packages
 RUN apt update && apt install -y git-all git-flow unzip vim curl gnupg bash-completion
 
-# Install APT repositories
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
 # Install APT packages nodejs & yarn
-RUN apt-get update && apt-get install -y nodejs yarn
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nodejs && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends yarn && \
+    npm install -g npm
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone
@@ -43,11 +45,6 @@ RUN echo "xdebug.remote_port=${XDEBUG_PORT}" >> /usr/local/etc/php/conf.d/docker
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
-
-# Install Deptrac (https://github.com/sensiolabs-de/deptrac)
-RUN curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.5.0/deptrac.phar -o deptrac.phar && \
-    chmod +x deptrac.phar && \
-    mv deptrac.phar /usr/local/bin/deptrac
 
 # Sonar Scanner
 RUN npm install -g sonarqube-scanner
